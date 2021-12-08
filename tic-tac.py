@@ -1,4 +1,4 @@
-import os
+from os import system
 
 m = [['-', '-', '-'],
      ['-', '-', '-'],
@@ -85,7 +85,7 @@ def isWin(x, char):
 
 
 while(redflag):
-    os.system("clear")
+    system("clear")
     show(m)
 
     x = int(input("Ingrese la posicion: "))
@@ -97,7 +97,7 @@ while(redflag):
 
     if m[h][k] != '-':
         print("Posicion llena")
-        os.system("sleep 2")
+        system("sleep 2")
     else:
         if turno:
             m[h][k] = xchar

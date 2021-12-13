@@ -1,12 +1,17 @@
-
+from os import system
 
 class game:
 
-    def __init__(self):
+    def __init__(self,jugador1, jugador2):
         self.redflag = True
         self.m = [['-', '-', '-'],
                   ['-', '-', '-'],
                   ['-', '-', '-']]
+        self.turno = True
+        self.xchar = '\033[1m'+'\033[91m'+'x'+'\033[0m'
+        self.ochar = '\033[1m'+'\033[94m'+'o'+'\033[0m'
+        self.jugador1 = jugador1
+        self.jugador2 = jugador2
 
 
     def converpos(self,y):
@@ -44,31 +49,64 @@ class game:
         if drawflag == 0:
             return True
 
-    def isWin(self, x, char):
+    def isWin(self, x, char, jugador):
         if x[0][0] == char and x[0][1] == char and x[0][2] == char:
-            print("Ganaste ", char)
+            print("Ganaste ", jugador)
             self.redflag = False
         elif x[1][0] == char and x[1][1] == char and x[1][2] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[2][0] == char and x[2][1] == char and x[2][2] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[0][0] == char and x[1][0] == char and x[2][0] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[0][1] == char and x[1][1] == char and x[2][1] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[0][2] == char and x[1][2] == char and x[2][2] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[0][0] == char and x[1][1] == char and x[2][2] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif x[0][2] == char and x[1][1] == char and x[2][0] == char:
-            print("Ganaste", char)
+            print("Ganaste", jugador)
             self.redflag = False
         elif self.isDraw(x):
             print("Empate")
             self.redflag = False
+
+    def initgame(self):
+        
+        while(self.redflag):
+            system("clear")
+            self.show(self.m)
+            if self.turno:
+                jugador = self.jugador1
+            else:
+                jugador = self.jugador2
+
+            x = int(input("Ingrese la posicion : "))
+
+            while(x < 1 or x > 9):
+                x = int(input("Ingrese una posicion correcta: "))
+
+            h, k = self.converpos(x)
+
+            if self.m[h][k] != '-':
+                print("Posicion llena")
+                system("sleep 2")
+            else:
+                if self.turno:
+                    self.m[h][k] = self.xchar
+                    self.show(self.m)
+                    self.isWin(self.m, self.xchar,jugador)
+                    self.turno = False
+                else:
+                    self.m[h][k] = self.ochar
+                    self.show(self.m)
+                    self.isWin(self.m, self.ochar,jugador)
+                    self.turno = True
+

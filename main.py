@@ -1,34 +1,39 @@
-from os import system
 from classes.game import game
+from os import system
 
-turno = True
-xchar = '\033[1m'+'\033[91m'+'x'+'\033[0m'
-ochar = '\033[1m'+'\033[94m'+'o'+'\033[0m'
-tictac = game()
 
-while(tictac.redflag):
+running = True
+
+def menu():
+    print("\t\tMENU")
+    print("1. Ingresar Jugadores")
+    print("2. Jugar")
+    print("3. Ver Marcador")
+    print("0. Salir")
+
+while(running):
     system("clear")
-    tictac.show(tictac.m)
-
-    x = int(input("Ingrese la posicion: "))
-
-    while(x < 1 or x > 9):
-        x = int(input("Ingrese una posicion correcta: "))
-
-    h, k = tictac.converpos(x)
-
-    if tictac.m[h][k] != '-':
-        print("Posicion llena")
+    menu()
+    opc=int(input("Ingresar opcion->"))
+    if opc == 0:
+        system("clear")
+        running = False
+    elif opc == 1:
+        jugador1 = input("Ingresar el nombre del primer jugador: ")
+        jugador2 = input("Ingresar el nombre del segundo jugador: ")
         system("sleep 2")
-    else:
-        if turno:
-            tictac.m[h][k] = xchar
-            tictac.show(tictac.m)
-            tictac.isWin(tictac.m, xchar)
-            turno = False
-        else:
-            tictac.m[h][k] = ochar
-            tictac.show(tictac.m)
-            tictac.isWin(tictac.m, ochar)
-            turno = True
+    elif opc == 2:
+        jugador1 = input("Ingresar el nombre del primer jugador: ")
+        jugador2 = input("Ingresar el nombre del segundo jugador: ")
+        tictac = game(jugador1,jugador2)
+        tictac.initgame()
+        system("sleep 2")
+    elif opc == 3:
+        system("clear")
+        print("Jugadores gg:\n1.Gillipollas\n2.Tonto")
+        system("sleep 2")
+    
+
+
+
 
